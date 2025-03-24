@@ -72,6 +72,17 @@ h2 {
 .btn:hover {
     background-color: #357E61; /* Darker green when hovering */
 }
+.redirect{
+    background-color: #4D9A7D; /* Earthy green for the buttons */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+}
 
 /* Timer Styles */
 .timer-container {
