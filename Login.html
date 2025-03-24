@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Poppins:wght@300;500&display=swap');
+        body {
+            display: flex;
+            height: 100vh;
+            background: url('download.gif') no-repeat center center/cover;
+            color: #000000;
+            justify-content: center;
+            align-items: center;
+            padding-left: 20%;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+        }
+        .title {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .input {
+            width: 90%;
+            border: 0px solid #333;
+            border-radius: 8px;
+            padding: 12px;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+        .button {
+            background-color: #503229;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            width: 95%;
+            cursor: pointer;
+        }
+        .signup-text {
+            margin-top: 15px;
+        }
+        .link {
+            color: #503229;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        function validateLogin() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+        
+            // Basic validation to check if fields are empty
+            if (username.trim() === "" || password.trim() === "") {
+                alert("Please enter both username and password.");
+                return false; // Stop further execution
+            }
+        
+            // Add a proper authentication mechanism (Replace this with actual backend validation)
+            if (username === "admin" && password === "password123") {
+                window.location.href = "Quiet Connect 2.html";
+            } else {
+                alert("Invalid credentials. Try again.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">Hello Champion !!</div>
+        <input class="input" type="email" id="username" placeholder="Email">
+        <input class="input" type="password" id="password" placeholder="Password">
+        <button class="button" type="button" onclick="validateLogin()">LOGIN</button>
+        <div class="signup-text">Don't have an account? <a href="signup.html" class="link">Sign Up</a></div>
+    </div>
+</body>
+</html>

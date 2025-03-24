@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introvert Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            margin: 0;
+            color: white;
+        }
+        .container {
+            text-align: center;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #f39c12;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 48%;
+            font-weight: bold;
+        }
+        .yes-btn {
+            background: #27ae60;
+            color: white;
+        }
+        .yes-btn:hover {
+            background: #219150;
+        }
+        .no-btn {
+            background: #e74c3c;
+            color: white;
+        }
+        .no-btn:hover {
+            background: #c0392b;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="quiz-card">
+            <h2 id="question"></h2>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress"></div>
+            </div>
+            <div class="buttons">
+                <button onclick="answer(false)" class="btn no-btn">No</button>
+                <button onclick="answer(true)" class="btn yes-btn">Yes</button>
+            </div>
+        </div>
+        <div class="card hidden" id="result-card">
+            <h2 id="result-title"></h2>
+            <p id="result-message"></p>
+        </div>
+    </div>
+    <script>
+        const questions = [
+            "Do you feel drained after social interactions?",
+            "Do you prefer deep conversations over small talk?",
+            "Do you enjoy spending time alone?",
+            "Do you often think before speaking?",
+            "Do you find large gatherings overwhelming?",
+            "Do you prefer texting over phone calls?",
+            "Do you need alone time to recharge?",
+            "Do you dislike being the center of attention?",
+            "Do you have a small circle of close friends?",
+            "Do you tend to observe before participating in social situations?"
+        ];
+        let currentQuestion = 0;
+        let score = 0;
+        
+        document.getElementById("question").innerText = questions[currentQuestion];
+        
+        function answer(isYes) {
+            if (isYes) score++;
+            
+            if (currentQuestion + 1 < questions.length) {
+                currentQuestion++;
+                document.getElementById("question").innerText = questions[currentQuestion];
+                document.getElementById("progress").style.width = ((currentQuestion + 1) / questions.length) * 100 + "%";
+            } else {
+                showResult();
+            }
+        }
+        
+        function showResult() {
+            document.getElementById("quiz-card").classList.add("hidden");
+            document.getElementById("result-card").classList.remove("hidden");
+            
+            if (score >= 6) {
+                document.getElementById("result-title").innerText = "You're an Introvert! 🎉";
+                document.getElementById("result-message").innerText = "Embrace your quiet strength and deep thinking!";
+            } else {
+                document.getElementById("result-title").innerText = "You're not quite an introvert! 😊";
+                document.getElementById("result-message").innerText = "You have a great balance of social and introspective traits!";
+            }
+            
+            setTimeout(() => {
+                window.location.href = "QuietConnect.html"; // Change this to your desired page
+            }, 3000);// Redirect after 3 seconds
+        }
+    </script>
+</body>
+</html>
+
+
+
