@@ -1,0 +1,107 @@
+/* Reset some basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and container styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('images2/meditation-icon.jpg'); /* Add your image here */
+    background-size: cover; /* Ensure it covers the entire screen */
+    background-position: center; /* Center the background */
+    background-repeat: no-repeat; /* Prevent background repetition */
+    height: 100vh;
+    color: #FFFFFF; /* Use white text for good contrast */
+}
+
+/* Align the container to the left */
+.container {
+    background-color: rgba(0, 0, 0, 0.4); /* Darker with transparency for better contrast */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+    margin-left: 20px; /* Align container to the left */
+    margin-top: 20px;  /* Add some top margin if needed */
+}
+
+/* Add styles for the image */
+.meditation-icon {
+    width: 80px;
+    height: 80px;
+    margin: 20px auto;
+    display: block;
+}
+
+/* Header */
+.header h1 {
+    font-size: 2.5rem;
+    color: #F1F1F1; /* Soft white for the main title */
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #A3D9D4; /* Light teal color for a calming feel */
+}
+
+/* Section titles */
+h2 {
+    font-size: 1.8rem;
+    margin: 20px 0;
+    color: #A3D9D4; /* Light teal for section headers */
+}
+
+/* Buttons */
+.btn {
+    background-color: #4D9A7D; /* Earthy green for the buttons */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+}
+
+.btn:hover {
+    background-color: #357E61; /* Darker green when hovering */
+}
+
+/* Timer Styles */
+.timer-container {
+    margin-top: 20px;
+}
+
+.timer-display {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #A3D9D4; /* Light teal for timer background */
+    color: #333; /* Darker text for readability */
+    border-radius: 8px;
+}
+
+/* Audio player styles */
+.audio {
+    margin-top: 30px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.container {
+    animation: fadeIn 2s ease-out;
+}

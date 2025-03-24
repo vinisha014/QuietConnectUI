@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation & Relaxation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+        body {
+            background: linear-gradient(to bottom, #d8b4fe, #a5b4fc);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+        .section {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            backdrop-filter: blur(10px);
+        }
+        .title {
+            color: #4f46e5;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .circle {
+            width: 100px;
+            height: 100px;
+            background-color: #60a5fa;
+            border-radius: 50%;
+            margin: 20px auto;
+            animation: breathe 4s infinite alternate;
+        }
+        @keyframes breathe {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+        .button {
+            background-color: #4f46e5;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #5b5bd6;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">Meditation & Relaxation</h1>
+
+    <div class="content">
+        <div class="section">
+            <h2>Guided Meditation</h2>
+            <p>Find inner peace with calm sessions</p>
+            <button class="button" onclick="window.location.href='project/index.html';">Start Session</button>
+        </div>
+
+        <div class="section">
+            <h2>Breathing Exercise</h2>
+            <div class="circle"></div>
+            <button class="button">Start Breathing</button>
+        </div>
+
+        <div class="section">
+            <h2>Soundscapes</h2>
+            <p>Immerse yourself in soothing sounds</p>
+            <button class="button">Play Sounds</button>
+        </div>
+    </div>
+</body>
+</html>

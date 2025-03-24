@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiet Connect</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Poppins:wght@300;500&display=swap');
+
+        :root {
+            --bg-color: #a6b1ab;
+            --container-color: #fffbeb;
+            --text-color: #3a3d5c;
+            --highlight-color: #ffb6c1;
+            --subtitle-color: #81c784;
+            --button-color: #ff9a8b;
+            --button-hover-color: #ff6f61;
+            --mood-indicator-color: #d4eaf7;
+
+
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: var(--container-color);
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+        }
+        .header {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--highlight-color);
+        }
+        .subtitle {
+            font-size: 16px;
+            color: var(--subtitle-color);
+        }
+        .mood-indicator {
+            background-color: var(--mood-indicator-color);
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        .activity-button {
+            background-color: var(--button-color);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            transition: box-shadow 0.3s ease;
+        }
+        .activity-button:hover {
+            background-color: var(--button-hover-color);
+            box-shadow: 0 0 10px var(--button-hover-color);
+        }
+        .quiet-companion img {
+            width: 150px;
+            border-radius: 50%;
+            margin-top: 20px;
+        }
+        .theme-selector {
+            margin-top: 15px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .theme-selector button {
+            background-color: var(--highlight-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.3s ease;
+        }
+        .theme-selector button:hover {
+            background-color: var(--button-hover-color);
+            color: #fff;
+        }
+        
+    </style>
+    <script>
+        function changeTheme(theme) {
+            const themes = {
+                light: {
+                    '--bg-color': '#f0f9ff',
+                    '--container-color': '#e0f2fe',
+                    '--text-color': '#1e293b',
+                    '--highlight-color': '#3b82f6',
+                    '--subtitle-color': '#60a5fa',
+                    '--button-color': '#3b82f6',
+                    '--button-hover-color': '#2563eb',
+                    '--mood-indicator-color': '#e0f7fa',
+                    '--companion-image': '/images/white-companion.jpg'
+
+                },
+                dark: {
+                    '--bg-color': '#000000',
+                    '--container-color': '#111111',
+                    '--text-color': '#dddddd',
+                    '--highlight-color': '#bdbdbd',
+                    '--subtitle-color': '#555555',
+                    '--button-color': '#333333',
+                    '--button-hover-color': '#222222',
+                    '--mood-indicator-color': '#222222',
+                    '--companion-image': '/images/dark-companion.jpg'
+                },
+                purple: {
+                    '--bg-color': '#2a1a40',
+                    '--container-color': '#4b296b',
+                    '--text-color': '#e0b3ff',
+                    '--highlight-color': '#c77dff',
+                    '--subtitle-color': '#d0a6ff',
+                    '--button-color': '#9d4edd',
+                    '--button-hover-color': '#7b2cbf',
+                    '--mood-indicator-color': '#5a3370',
+                    '--companion-image': '/images/purple-companion.jpg'
+                },green: {
+                    '--bg-color': '#2d4739',
+                    '--container-color': '#a8c7a8',
+                    '--text-color': '#1f3425',
+                    '--highlight-color': '#4a785a',
+                    '--subtitle-color': '#81a784',
+                    '--button-color': '#3d7a56',
+                    '--button-hover-color': '#2e5d40',
+                    '--mood-indicator-color': '#c8e6c9',
+                    '--companion-image': '/images/green-companion.jpg'
+                },
+                ocean: {
+                    '--bg-color': '#1b3a4b',
+                    '--container-color': '#88c4d8',
+                    '--text-color': '#0a2d3f',
+                    '--highlight-color': '#3a7ca5',
+                    '--subtitle-color': '#66a5bc',
+                    '--button-color': '#2b6f94',
+                    '--button-hover-color': '#1e5673',
+                    '--mood-indicator-color': '#b3e0f2',
+                    '--companion-image': '/images/ocean-companion.jpg'
+                },berry: {
+                    '--bg-color': '#421220',
+                    '--container-color': '#7a244f',
+                    '--text-color': '#fbcfe8',
+                    '--highlight-color': '#f472b6',
+                    '--subtitle-color': '#f9a8d4',
+                    '--button-color': '#ec4899',
+                    '--button-hover-color': '#db2777',
+                    '--mood-indicator-color': '#6d1a3b',
+                    '--companion-image': '/images/berryy-companion.jpg'
+                },beige: {
+                    '--bg-color': '#f3e5ab',
+                    '--container-color': '#f0ead6',
+                    '--text-color': '#5e503f',
+                    '--highlight-color': '#c0a080',
+                    '--subtitle-color': '#d2b48c',
+                    '--button-color': '#b08a5e',
+                    '--button-hover-color': '#9a7352',
+                    '--mood-indicator-color': '#f3e5ab',
+                    '--companion-image': '/images/beige-companion.jpg'
+                }
+            };
+            const selectedTheme = themes[theme] || themes.dark;
+            Object.keys(selectedTheme).forEach(key => {
+                document.documentElement.style.setProperty(key, selectedTheme[key]);
+            });
+            document.getElementById('companion-img').src = selectedTheme['--companion-image'];
+
+        }
+
+        function navigateToActivity(activity) {
+            const activityPages = {
+                meditation: "GuidedMeditation.html",
+                story: "story.html",
+                sounds: "sounds.html"
+            };
+            window.location.href = activityPages[activity];
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Quiet Connect</div>
+        <div class="subtitle">Your peaceful digital space</div>
+
+        <div class="mood-indicator">
+            <p><strong>Mood:</strong> Energetic</p>
+            <progress value="80" max="100"></progress>
+        </div>
+
+        <div class="quiet-companion">
+            <img id="companion-img" src="/images/cat-companion.jpg" alt="My Image">
+            <p>Your Quiet Companion</p>
+        </div>
+
+        <div class="activities">
+            <a href="GuidedMeditation.html"><button class="activity-button">🌿 Guided Meditation</button></a>
+            <a href="story.html"><button class="activity-button">📚 Read a Soothing Story</button></a>
+            <a href="sounds.html"><button class="activity-button">🎵 Listen to Relaxing Sounds</button></a>
+            <a href="samplesample.html"><button class="activity-button">💬 Open Chat</button></a>
+        </div>
+        
+
+        <div class="theme-selector">
+            <button onclick="changeTheme('light')">Light</button>
+            <button onclick="changeTheme('dark')">Dark</button>
+            <button onclick="changeTheme('purple')">Purple</button>
+            <button onclick="changeTheme('green')">Green</button>
+            <button onclick="changeTheme('ocean')">Ocean</button>
+            <button onclick="changeTheme('berry')">Berry</button>
+            <button onclick="changeTheme('beige')">Beige</button>
+        </div>
+    </div>
+</body>
+</html>

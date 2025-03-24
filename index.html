@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation Sanctuary</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Welcome to Your Meditation Sanctuary</h1>
+            <p class="subtitle">Find Peace, Calm, and Relaxation</p>
+        </header>
+        <section class="guide">
+            <h2>Guided Meditation</h2>
+            <p>Follow along with our guided meditation sessions to help you find your inner peace. Choose a session below:</p>
+            <img src="images2/goatie.jpg" alt="Meditation Icon" class="meditation-icon">
+            <button class="btn" id="startSession">Start Meditation</button>
+        </section>
+        <section class="timer">
+            <h2>Time Your Meditation</h2>
+            <div class="timer-container">
+                <div class="timer-display" id="timerDisplay">05:00</div>
+                <button class="btn" id="startTimer">Start Timer</button>
+                <button class="btn" id="resetTimer">Reset Timer</button>
+            </div>
+        </section>
+        <section class="audio">
+            <h2>Relaxing Audio</h2>
+            <button class="btn" id="playAudio">Play Calm Music</button>
+            <audio id="audio" src="audio/relaxing.mp3" loop></audio>
+        </section>
+    </div>
+
+    <script src="script.js"></script> <!-- External JavaScript file -->
+</body>
+</html>

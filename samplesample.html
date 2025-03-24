@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiet Connect</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Poppins:wght@300;500&display=swap');
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(120deg, #333, #111);
+            color: white;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 75px;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin: 5px 0;
+            max-width: 70%;
+            word-wrap: break-word;
+            display: inline-block;
+            opacity: 0;
+            animation: fadeIn 0.3s forwards, floatBubble 2s ease-in-out;
+            position: relative;
+        }
+        
+        .user-message {
+            background: #4A69BB;
+            align-self: flex-end;
+        }
+
+        .ai-message {
+            background: #575858;
+            align-self: flex-start;
+        }
+
+        .input-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(20, 20, 20, 0.95);
+            display: flex;
+            padding: 15px;
+            gap: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            height: 65px;
+        }
+        
+        .input-box {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(200, 200, 200, 0.2);
+            color: white;
+            outline: none;
+            font-size: 16px;
+            resize: none;
+            height: 50px;
+        }
+
+        .btn {
+            background-color: #777;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #999;
+        }
+
+        .sidebar {
+            width: 30%;
+            max-width: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 2px solid rgba(255, 255, 255, 0.2);
+            display: none; /* Initially hidden */
+            z-index: 1000;
+        }
+
+        .sidebar h3 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar .old-message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: #4A69BB;
+            color: white;
+            word-wrap: break-word;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatBubble {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+    .back-btn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: #666;
+        padding: 10px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: large;
+    }
+    .back-btn:hover {
+        background: #999;
+    }
+
+    .chat-history-btn {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: #444;
+        color: white;
+        padding: 10px;
+        border-radius: 15px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .chat-history-btn:hover {
+        background: #666;
+    }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">YourBuddyAI</div>
+
+    <button class="btn back-btn" onclick="goBack()">🡄</button>
+
+    <button class="chat-history-btn" onclick="toggleChatHistory()">Chat History</button>
+
+    <div class="sidebar" id="chatHistory"></div>
+    
+    <div id="chatContainer" class="chat-container"></div>
+    
+    <div class="input-container">
+        <textarea id="userInput" class="input-box" placeholder="What's on your mind today?"></textarea>
+        <button class="btn" onclick="generateResponse()">Send</button>
+    </div>
+
+    <script>
+
+        function goBack() {
+            window.location.href = "Main.html"; // Change 'index.html' to your main page file
+        }
+
+        document.addEventListener("DOMContentLoaded", loadChatHistory);
+        
+        async function generateResponse() {
+            const userInput = document.getElementById('userInput').value;
+            if (!userInput.trim()) return;
+            addMessage(userInput, "user-message");
+            document.getElementById('userInput').value = '';
+            
+            try {
+                const apiResponse = await fetch('http://localhost:4000/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ input: userInput })
+                });
+                const data = await apiResponse.json();
+                
+                if (apiResponse.ok && data.response) {
+                    addMessage(data.response, "ai-message");
+                    saveChatToAWS(userInput, data.response);
+                } else {
+                    addMessage(`Error: ${JSON.stringify(data)}`, "ai-message");
+                }
+            } catch (error) {
+                addMessage("Network error. Please try again.", "ai-message");
+            }
+        }
+
+        function addMessage(text, className) {
+            const chatContainer = document.getElementById("chatContainer");
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", className);
+            messageDiv.innerText = text;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        async function loadChatHistory() {
+            try {
+                const response = await fetch('http://localhost:4000/api/getChat'); // Update with your actual API URL if deployed
+                const data = await response.json();
+                console.log("Chat History Response:", data);
+
+                const chatHistory = document.getElementById("chatHistory");
+                chatHistory.innerHTML = "<h3>Old Chats</h3>";
+
+                if (!data.chatHistory || data.chatHistory === "No chat history found.") {
+                    chatHistory.innerHTML += "<p>No previous chats available.</p>";
+                    return;
+                }
+
+                const messages = data.chatHistory.split("<br><br>");
+                messages.forEach(msg => {
+                    const msgDiv = document.createElement("div");
+                    msgDiv.classList.add("old-message");
+                    msgDiv.innerHTML = msg;
+                    chatHistory.appendChild(msgDiv);
+                });
+            } catch (error) {
+                console.error("Failed to load chat history:", error);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", loadChatHistory);
+
+        function saveChatToAWS(userMessage, aiMessage) {
+            fetch('http://localhost:4000/api/saveChat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chatHistory: `👤 ${userMessage} <br> 🤖 ${aiMessage}` })
+            })
+            .then(response => response.json())
+            .then(data => console.log("✅ Chat saved to AWS:", data))
+            .catch(error => console.error("AWS Save Error:", error));
+        }
+
+        function toggleChatHistory() {
+            const sidebar = document.getElementById("chatHistory");
+            sidebar.style.display = sidebar.style.display === "none" || sidebar.style.display === "" ? "block" : "none";
+        }
+
+    </script>
+</body>
+</html>

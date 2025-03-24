@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation Sanctuary</title>
+    <style>
+        /* Reset some basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and container styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f1f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        /* Header */
+        .header h1 {
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #4e6e68;
+        }
+
+        /* Section titles */
+        h2 {
+            font-size: 1.8rem;
+            margin: 20px 0;
+            color: #2f4f4f;
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: #78a5a3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            background-color: #4d7070;
+        }
+
+        /* Timer Styles */
+        .timer-container {
+            margin-top: 20px;
+        }
+
+        .timer-display {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #e1eae4;
+            border-radius: 8px;
+        }
+
+        /* Audio player styles */
+        .audio {
+            margin-top: 30px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            animation: fadeIn 2s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Welcome to Your Meditation Sanctuary</h1>
+            <p class="subtitle">Find Peace, Calm, and Relaxation</p>
+        </header>
+        <section class="guide">
+            <h2>Guided Meditation</h2>
+            <p>Follow along with our guided meditation sessions to help you find your inner peace. Choose a session below:</p>
+            <button class="btn" id="startSession">Start Meditation</button>
+        </section>
+        <section class="timer">
+            <h2>Time Your Meditation</h2>
+            <div class="timer-container">
+                <div class="timer-display" id="timerDisplay">05:00</div>
+                <button class="btn" id="startTimer">Start Timer</button>
+                <button class="btn" id="resetTimer">Reset Timer</button>
+            </div>
+        </section>
+        <section class="audio">
+            <h2>Relaxing Audio</h2>
+            <button class="btn" id="playAudio">Play Calm Music</button>
+            <audio id="audio" src="audio/relaxing.mp3" loop></audio>
+        </section>
+    </div>
+
+    <script>
+        // Meditation Timer
+        let timer;
+        let isTimerRunning = false;
+        let minutes = 5;
+        let seconds = 0;
+
+        const timerDisplay = document.getElementById("timerDisplay");
+        const startTimerBtn = document.getElementById("startTimer");
+        const resetTimerBtn = document.getElementById("resetTimer");
+
+        function startTimer() {
+            if (isTimerRunning) return;
+
+            isTimerRunning = true;
+            startTimerBtn.textContent = "Pause Timer";
+
+            timer = setInterval(() => {
+                if (seconds === 0 && minutes === 0) {
+                    clearInterval(timer);
+                    alert("Meditation time is up. Well done!");
+                    isTimerRunning = false;
+                    startTimerBtn.textContent = "Start Timer";
+                } else {
+                    if (seconds === 0) {
+                        minutes--;
+                        seconds = 59;
+                    } else {
+                        seconds--;
+                    }
+
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            isTimerRunning = false;
+            minutes = 5;
+            seconds = 0;
+            updateTimerDisplay();
+            startTimerBtn.textContent = "Start Timer";
+        }
+
+        function updateTimerDisplay() {
+            timerDisplay.textContent = `${formatTime(minutes)}:${formatTime(seconds)}`;
+        }
+
+        function formatTime(time) {
+            return time < 10 ? `0${time}` : time;
+        }
+
+        startTimerBtn.addEventListener("click", startTimer);
+        resetTimerBtn.addEventListener("click", resetTimer);
+
+        // Audio control
+        const audio = document.getElementById("audio");
+        const playAudioBtn = document.getElementById("playAudio");
+
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                playAudioBtn.textContent = "Pause Calm Music";
+            } else {
+                audio.pause();
+                playAudioBtn.textContent = "Play Calm Music";
+            }
+        }
+
+        playAudioBtn.addEventListener("click", toggleAudio);
+
+        // Start meditation session
+        const startSessionBtn = document.getElementById("startSession");
+
+        startSessionBtn.addEventListener("click", () => {
+            alert("Enjoy your guided meditation!");
+        });
+    </script>
+</body>
+</html>
